@@ -73,17 +73,11 @@ int partition(int *a,int low,int high)
 	int pivot=a[high];
 
 	int j=high-1,i1=low;
-	for(int i=low;i<=j;i++)
+	for(int i=low;i<=j;j++)
 	{
 		if(a[i]<pivot)
 		{
-			swap(a[i],a[i1]);
-			i1++;
-		}
-		else
-		{
-		       	swap(a[i],a[j--]);
-			
+			swap(a[i],a[i1++]);
 		}
 	}
 
@@ -93,15 +87,65 @@ int partition(int *a,int low,int high)
 
 void quick_sort(int *a ,int low,int high)
 {
-	if(low<high)
+	while(low<high)
 	{
       int pi;
       pi=partition(a,low,high);
-      
+
       quick_sort(a,low,pi-1);
       quick_sort(a,pi+1,high);
 	}
-	return;
+}
+
+
+void merge_sort(int *a,int low,int high)
+{
+
+	if(low>=high)
+		return;
+	int mid;
+	mid=high+(low-high)/2;
+
+
+	merge_sort(a,low,mid-1);
+	merge_sort(a,mid,high);
+
+	int arr[high-low+1];
+        int i=0,i1=low,j1=mid;
+
+    while(i1<mid&&j1<=high)
+    {
+    	if(a[i1]<a[j1])
+           {
+           	arr[i]=a[i1];
+           	i1++;
+           }
+        else
+           {
+            arr[i]=a[j1];
+            j1++;
+           }
+           i++;
+    }
+   
+    while(i1<mid)
+    	{
+    		arr[i]=a[i1];
+    		i++;
+    		i1++;
+    	}
+    
+    while(j1<=high)
+    {
+    	arr[i]=a[j1];
+    	i++;
+    	j1++;
+    }
+
+    for(int i=low;i<=high;i++)
+    {
+        a[i]=arr[i-low];
+    }
 }
 
 int main()
@@ -122,8 +166,7 @@ int main()
     }
     
     //selection_sort(a,n);
-    quick_sort(a,0,n-1);
-    // cout<<partition(a,1,n-1)<<endl;
+    merge_sort(a,0,n-1);
 
     for(int i=0;i<n;i++)
     {
