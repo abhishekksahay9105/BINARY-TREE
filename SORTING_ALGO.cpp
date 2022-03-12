@@ -146,6 +146,42 @@ void merge_sort(int *a,int low,int high)
     {
         a[i]=arr[i-low];
     }
+	
+}
+
+int maximum(int *a, int n)
+{
+    int ans=a[0];
+
+    for(int i=1;i<n;i++)
+    {
+    	ans=max(ans,a[i]);
+    }
+    cout<<ans<<endl;
+    return ans;
+}
+
+void count_sort(int *a,int n)
+{
+	int ans=maximum(a,n);
+	int coun[ans+1]={0};
+
+	for(int i=0;i<n;i++)
+	{
+		coun[a[i]]++;
+	}
+
+	int p=0;
+	
+	for(int i=0;i<=ans;i++)
+	{
+		while(coun[i]>0)
+		{
+			coun[i]--;
+			a[p]=i;
+			p++;
+		}
+	}
 }
 
 int main()
@@ -166,11 +202,12 @@ int main()
     }
     
     //selection_sort(a,n);
-    merge_sort(a,0,n-1);
+  //  merge_sort(a,0,n-1);
+    count_sort(a,n);
 
     for(int i=0;i<n;i++)
     {
-    	cout<<a[i];
+    	cout<<a[i]<<" ";
     }
 
     return 0;
